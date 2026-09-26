@@ -335,6 +335,20 @@ describe('Server API Endpoints Integration Test', () => {
     assert.strictEqual(res.body.version, pkg.version);
   });
 
+  it('GET clean route aliases (/deck, /studio, /obs, /controller) harus mengembalikan HTTP 200', async () => {
+    const deckRes = await request('GET', '/deck');
+    assert.strictEqual(deckRes.status, 200);
+
+    const studioRes = await request('GET', '/studio');
+    assert.strictEqual(studioRes.status, 200);
+
+    const obsRes = await request('GET', '/obs');
+    assert.strictEqual(obsRes.status, 200);
+
+    const ctrlRes = await request('GET', '/controller');
+    assert.strictEqual(ctrlRes.status, 200);
+  });
+
   it('server harus memiliki tepat 1 error listener dan tidak menduplikasi listener saat port fallback (REL-03)', () => {
     const errorListenersBefore = appServer.listenerCount('error');
     assert.strictEqual(errorListenersBefore, 1);

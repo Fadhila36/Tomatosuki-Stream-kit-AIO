@@ -77,86 +77,83 @@ const StreamKitUI = (() => {
 
   function getLang() { return _langCode; }
 
-  // Sidebar navigation
+  // Sidebar navigation (Dribbble Steam & Broadcast Studio Hybrid)
   function sidebarHTML() {
     const pages = [
-      { key: 'dashboard', href: '/', label: t('nav_dashboard', 'Dashboard'), icon: ICONS.dashboard },
-      { key: 'customdeck', href: '/customdeck.html', label: t('nav_custom_deck', 'Custom Deck'), icon: ICONS.customdeck },
-      { key: 'deck', href: '/deck.html', label: t('nav_deck_view', 'Deck View'), icon: ICONS.deck },
+      { key: 'dashboard', href: '/', label: t('nav_dashboard', 'Studio Hub'), icon: ICONS.dashboard },
+      { key: 'deck', href: '/deck.html', label: t('nav_deck_view', 'Deck Controller'), icon: ICONS.gamepad },
+      { key: 'customdeck', href: '/customdeck.html', label: t('nav_custom_deck', 'Custom Deck Studio'), icon: ICONS.customdeck },
     ];
-    // Connect to phone — only on dashboard (calls JS function)
+
+    const obsItem = `<a href="/obs.html" target="_blank" class="sidebar-link">${ICONS.obs}<span>${t('nav_obs_overlay', 'OBS Overlay')}</span></a>`;
     const connectItem = _activePage === 'dashboard'
-      ? `<a href="#" class="nav-item" onclick="closeSidebar();openConnect();return false;">${ICONS.phone}${t('nav_connect_phone', 'Hubungkan ke HP')}</a>`
-      : '';
-    const obsItem = `<a href="/obs.html" target="_blank" class="nav-item">${ICONS.obs}${t('nav_obs_overlay', 'OBS Overlay')}</a>`;
+      ? `<a class="sidebar-link" onclick="closeSidebar();openConnect();return false;" style="cursor:pointer;">${ICONS.phone}<span>${t('nav_connect_phone', 'Connect Phone')}</span></a>`
+      : `<a href="/" class="sidebar-link">${ICONS.phone}<span>${t('nav_connect_phone', 'Connect Phone')}</span></a>`;
 
     const kdItem = _activePage === 'dashboard'
-      ? `<a class="nav-item" onclick="closeSidebar();openKDSetup();return false;" style="cursor:pointer;">${ICONS.kd}${t('nav_kd_counter', 'K/D · W/L Counter')}</a>`
-      : `<a href="/" class="nav-item">${ICONS.kd}${t('nav_kd_counter', 'K/D · W/L Counter')}</a>`;
+      ? `<a class="sidebar-link" onclick="closeSidebar();openKDSetup();return false;" style="cursor:pointer;">${ICONS.kd}<span>${t('nav_kd_counter', 'K/D · W/L Tracker')}</span></a>`
+      : `<a href="/" class="sidebar-link">${ICONS.kd}<span>${t('nav_kd_counter', 'K/D · W/L Tracker')}</span></a>`;
 
-    const docsItem = `<a href="#" class="nav-item" onclick="closeSidebar();StreamKitUI.openDocs();return false;" style="cursor:pointer;">${ICONS.docs}${t('nav_docs_guide', 'Panduan Penggunaan')}</a>`;
-
-    const settingsItem = `<a href="#" class="nav-item" onclick="closeSidebar();StreamKitUI.openHub('settings');return false;" style="cursor:pointer;">${ICONS.settings}${t('hub_tab_settings', 'Pengaturan')}</a>`;
-    const profileItem = `<a href="#" class="nav-item" onclick="closeSidebar();StreamKitUI.openHub('profile');return false;" style="cursor:pointer;">${ICONS.profile}${t('hub_tab_profile', 'Profil & Sistem')}</a>`;
-    const aboutItem = `<a href="#" class="nav-item" onclick="closeSidebar();StreamKitUI.openHub('about');return false;" style="cursor:pointer;">${ICONS.about}${t('hub_tab_about', 'Tentang')}</a>`;
+    const docsItem = `<a class="sidebar-link" onclick="closeSidebar();StreamKitUI.openDocs();return false;" style="cursor:pointer;">${ICONS.docs}<span>${t('nav_docs_guide', 'Help & Docs')}</span></a>`;
+    const settingsItem = `<a class="sidebar-link" onclick="closeSidebar();StreamKitUI.openHub('settings');return false;" style="cursor:pointer;">${ICONS.settings}<span>${t('hub_tab_settings', 'Settings')}</span></a>`;
+    const profileItem = `<a class="sidebar-link" onclick="closeSidebar();StreamKitUI.openHub('profile');return false;" style="cursor:pointer;">${ICONS.profile}<span>${t('hub_tab_profile', 'System Profile')}</span></a>`;
 
     const navLinks = pages.map(p =>
-      `<a href="${p.href}" class="nav-item${_activePage === p.key ? ' active' : ''}">${p.icon}${p.label}</a>`
+      `<a href="${p.href}" class="sidebar-link${_activePage === p.key ? ' active' : ''}">${p.icon}<span>${p.label}</span></a>`
     ).join('');
 
     // Language switcher
     const langs = [
-      { code: 'id', flag: '🇮🇩', name: 'Indonesia' },
-      { code: 'en', flag: '🇬🇧', name: 'English' },
+      { code: 'id', flag: '🇮🇩', name: 'ID' },
+      { code: 'en', flag: '🇬🇧', name: 'EN' },
     ];
     const langBtns = langs.map(l =>
       `<button onclick="StreamKitUI.switchLang('${l.code}')"
-        style="flex:1;padding:4px 6px;border-radius:4px;font-size:.62rem;font-weight:600;cursor:pointer;transition:all var(--duration-fast);font-family:inherit;
-          background:${_langCode === l.code ? 'var(--panel3)' : 'transparent'};
-          color:${_langCode === l.code ? '#ffffff' : 'var(--tx2)'};
-          border:1px solid ${_langCode === l.code ? 'var(--bd2)' : 'transparent'};
+        style="flex:1;padding:4px 6px;border-radius:6px;font-size:.62rem;font-weight:700;cursor:pointer;transition:all var(--duration-fast);font-family:inherit;
+          background:${_langCode === l.code ? 'var(--ember-dim)' : 'transparent'};
+          color:${_langCode === l.code ? 'var(--ember)' : 'var(--tx2)'};
+          border:1px solid ${_langCode === l.code ? 'var(--ember-border)' : 'transparent'};
           ">${l.flag} ${l.name}</button>`
     ).join('');
 
-    const langSection = `
-      <div style="padding:8px 10px;border-top:1px solid var(--bd);background:#08090d;">
-        <div style="display:flex;align-items:center;gap:5px;margin-bottom:5px;">
-          <span style="color:var(--tx3);display:flex;align-items:center;">${ICONS.lang.replace('16', '12').replace('height="16"', 'height="12"')}</span>
-          <span style="font-size:.52rem;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--tx3);">${t('nav_language', 'Bahasa')}</span>
-        </div>
-        <div style="display:flex;gap:3px;background:var(--panel);padding:2px;border-radius:5px;border:1px solid var(--bd);">${langBtns}</div>
-      </div>`;
-
     return `
-      <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 12px 10px;border-bottom:1px solid var(--bd);background:#08090d;">
-        <div style="display:flex;align-items:center;gap:8px;">
-          <div style="width:22px;height:22px;border-radius:4px;background:var(--panel3);border:1px solid var(--bd2);display:flex;align-items:center;justify-content:center;color:var(--brand);font-size:0.7rem;font-weight:800;">L</div>
-          <div style="font-size:.72rem;font-weight:800;letter-spacing:0.4px;line-height:1.2;font-family:'Inter',sans-serif;">LOOSE<span style="color:var(--brand);display:inline;">CAST</span><span style="display:block;font-size:0.48rem;font-weight:600;color:var(--tx3);letter-spacing:0.8px;">STUDIO WORKSPACE</span></div>
-        </div>
-        <button onclick="closeSidebar()" class="sidebar-close-mobile" style="background:none;border:1px solid var(--bd);color:var(--tx2);width:22px;height:22px;border-radius:4px;cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:center;">✕</button>
+      <div class="sidebar-header">
+        <a href="/" class="sidebar-brand">
+          <div class="brand-emblem">L</div>
+          <div class="brand-info">
+            <div class="brand-name">LOOSE<span>CAST</span></div>
+            <div class="brand-tagline">STREAM WORKSPACE</div>
+          </div>
+        </a>
+        <button onclick="closeSidebar()" class="sidebar-close-mobile" style="background:none;border:1px solid var(--bd);color:var(--tx2);width:24px;height:24px;border-radius:6px;cursor:pointer;font-size:.7rem;display:flex;align-items:center;justify-content:center;">✕</button>
       </div>
-      <nav style="flex:1;padding:6px 0;overflow-y:auto;min-height:0;">
-        <div style="padding:4px 10px 2px;font-size:.52rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--tx3);">${t('sec_workspace', 'Studio Workspace')}</div>
+
+      <nav class="sidebar-nav">
+        <div class="sidebar-sec-title">${t('sec_workspace', 'Studio Workspace')}</div>
         ${navLinks}
-        <div class="nav-sep"></div>
-        <div style="padding:4px 10px 2px;font-size:.52rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--tx3);">${t('sec_integrations', 'Integrasi & Hardware')}</div>
+
+        <div class="sidebar-sec-title" style="margin-top:8px;">${t('sec_integrations', 'Integrations & Tools')}</div>
         ${obsItem}
         ${connectItem}
         ${kdItem}
-        <div class="nav-sep"></div>
-        <div style="padding:4px 10px 2px;font-size:.52rem;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;color:var(--tx3);">${t('hub_title', 'Sistem & Tools')}</div>
+
+        <div class="sidebar-sec-title" style="margin-top:8px;">${t('hub_title', 'System & Preferences')}</div>
         ${settingsItem}
         ${docsItem}
         ${profileItem}
-        ${aboutItem}
       </nav>
-      <div style="flex-shrink:0;border-top:1px solid var(--bd);padding:6px 10px;background:#08090d;">
-        <div style="display:flex;align-items:center;justify-content:space-between;font-size:0.6rem;color:var(--tx3);">
-          <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:5px;height:5px;border-radius:50%;background:#10b981;display:inline-block;"></span> LOCAL HOST</span>
-          <span class="mono" style="color:var(--tx2);">:3000</span>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user-pill" onclick="StreamKitUI.openHub('profile')">
+          <div class="user-avatar">F</div>
+          <div class="user-details">
+            <div class="user-name">fadhila36</div>
+            <div class="user-status">ONLINE · :3000</div>
+          </div>
+          <div style="color:var(--tx3);">${ICONS.chevronRight}</div>
         </div>
-      </div>
-      ${langSection}`;
+        <div style="display:flex;gap:4px;background:rgba(0,0,0,0.3);padding:3px;border-radius:8px;border:1px solid var(--bd);">${langBtns}</div>
+      </div>`;
   }
 
   // Sidebar injection

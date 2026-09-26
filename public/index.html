@@ -16,105 +16,188 @@
 
 <div class="main-wrap">
   <header class="topbar">
-    <button class="burger" onclick="openSidebar()" title="Menu"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
-    <div class="brand-text">LOOSE<span>CAST</span> <small style="font-size:0.6rem;color:var(--tx3);font-weight:600;margin-left:4px;letter-spacing:0.5px;">STUDIO</small></div>
-    <div class="status-pill"><div class="sdot"></div><span data-i18n="topbar_running">ONLINE</span></div>
-    <div class="sp"></div>
-    <div class="url-chip"><code id="url-disp">localhost:3000</code><button class="copy-btn" onclick="copyUrl()" title="Copy URL"><svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button></div>
-    <button class="topbtn" onclick="StreamKitUI.openHub('settings')" data-i18n-title="topbar_settings" title="Settings"><svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg> <span data-i18n="topbar_settings">Settings</span></button>
+    <button class="burger" onclick="openSidebar()" title="Menu"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M3 12h18M3 6h18M3 18h18"/></svg></button>
+    
+    <div class="search-wrap">
+      <div class="search-icon"><svg width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg></div>
+      <input type="text" class="search-input" id="global-search" placeholder="Search memes, sounds, macros, scenes..." onkeyup="filterDashboardMemes(this.value)">
+    </div>
+
+    <div class="topbar-actions">
+      <div class="url-chip">
+        <code id="url-disp">localhost:3000</code>
+        <button class="copy-btn" onclick="copyUrl()" title="Copy Server URL"><svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg></button>
+      </div>
+      
+      <button class="topbtn" onclick="triggerPanic()" title="Panic Stop" style="color:var(--brand);background:var(--brand-dim);border:1px solid var(--brand-border);border-radius:var(--r-full);padding:6px 14px;font-weight:700;font-size:0.75rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="7.86 2 16.14 2 22 7.86 22 16.14 16.14 22 7.86 22 2 16.14 2 7.86 7.86 2"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+        <span>PANIC</span>
+      </button>
+
+      <button class="topbtn" onclick="StreamKitUI.openHub('settings')" title="Settings" style="background:var(--panel);border:1px solid var(--bd);color:var(--tx);border-radius:var(--r-full);padding:6px 14px;font-weight:600;font-size:0.75rem;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+        <span>Settings</span>
+      </button>
+    </div>
   </header>
 
   <div class="scroll-area">
-    <!-- Stats Overview -->
-    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;" class="fu d1">
-      <div class="stat-card">
-        <div class="stat-val" id="stat-files">—</div>
-        <div class="stat-lbl" data-i18n="stat_total_memes">Total Meme</div>
+    <!-- Spotlight Hero Showcase Banner (Dribbble Steam Style) -->
+    <div class="spotlight-hero">
+      <div class="hero-left">
+        <div class="hero-tags">
+          <span class="hero-tag active">🔴 LIVE READY</span>
+          <span class="hero-tag">⚡ 0MS LATENCY</span>
+          <span class="hero-tag">🎬 OVERLAY ENGINE</span>
+          <span class="hero-tag">🎧 SOUNDBOARD</span>
+        </div>
+        <h1 class="hero-title">LooseCast Broadcast Studio</h1>
+        <p class="hero-subtitle">Kontrol live stream realtime: Soundboard trigger, video meme overlay green screen, automasi makro, dan sinkronisasi OBS Studio WebSocket v5.</p>
+        <div class="hero-cta-group">
+          <a href="/deck.html" class="btn-primary-ember">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+            <span>Luncurkan Deck Controller</span>
+          </a>
+          <a href="/obs.html" target="_blank" class="btn-secondary-dark">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect width="15" height="14" x="1" y="5" rx="2" ry="2"/></svg>
+            <span>OBS Browser Source</span>
+          </a>
+          <button class="btn-secondary-dark" onclick="openOnboarding()">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+            <span>Panduan Mulai</span>
+          </button>
+        </div>
       </div>
-      <div class="stat-card">
-        <div class="stat-val" id="stat-size">—</div>
-        <div class="stat-lbl" data-i18n="stat_storage">Kapasitas Media</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-val" id="stat-triggers">—</div>
-        <div class="stat-lbl" data-i18n="stat_total_triggers">Total Trigger</div>
+
+      <!-- Right Mini Stats Box -->
+      <div class="hero-mini-card">
+        <div style="font-size:0.65rem;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:var(--ember);display:flex;align-items:center;gap:6px;">
+          <span style="width:6px;height:6px;border-radius:50%;background:var(--gn);"></span>
+          TELEMETRY OVERVIEW
+        </div>
+        <div class="mini-stat-row">
+          <span class="mini-stat-label">Total Media Meme</span>
+          <span class="mini-stat-val" id="stat-files">—</span>
+        </div>
+        <div class="mini-stat-row">
+          <span class="mini-stat-label">Kapasitas Disk Storage</span>
+          <span class="mini-stat-val" id="stat-size">—</span>
+        </div>
+        <div class="mini-stat-row">
+          <span class="mini-stat-label">Total Triggers Eksekusi</span>
+          <span class="mini-stat-val" id="stat-triggers" style="color:var(--ember);">—</span>
+        </div>
       </div>
     </div>
 
-    <!-- Onboarding Guide Banner -->
-    <button class="ob-btn fu d2" onclick="openOnboarding()">
-      <div class="ob-icon">
-        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="10" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
-      </div>
-      <div>
-        <div class="ob-main" data-i18n="ob_guide_title">Panduan Cepat Stream Kit</div>
-        <div class="ob-sub" data-i18n="ob_guide_desc">Pelajari cara menghubungkan Meme Overlay ke OBS Studio dan kontrol via HP.</div>
-      </div>
-    </button>
-
-    <!-- Main Navigation Tools -->
-    <div class="menu-sec-label fu d2" data-i18n="sec_main_features">Fitur Utama</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:20px;" class="fu d2">
-      <a href="/customdeck.html" class="menu-card feat">
-        <div class="mc-ic">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.9a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>
-        </div>
-        <div class="mc-title" data-i18n="card_custom_deck_title">Custom Deck</div>
-        <div class="mc-desc" data-i18n="card_custom_deck_desc">Upload meme, atur durasi animasi, audio, dan tata letak overlay.</div>
-      </a>
-      <a href="/deck.html" class="menu-card">
-        <div class="mc-ic">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="15" x2="15.01" y1="13" y2="13"/><line x1="18" x2="18.01" y1="11" y2="11"/><rect width="20" height="12" x="2" y="6" rx="6"/></svg>
-        </div>
-        <div class="mc-title" data-i18n="card_deck_title">Deck Controller</div>
-        <div class="mc-desc" data-i18n="card_deck_desc">Soundboard trigger instan untuk live stream OBS.</div>
-      </a>
-      <a href="#" class="menu-card" onclick="openConnect();return false;">
-        <div class="mc-ic">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
-        </div>
-        <div class="mc-title" data-i18n="card_connect_title">Koneksi Smartphone</div>
-        <div class="mc-desc" data-i18n="card_connect_desc">Jadikan smartphone sebagai remote deck nirkabel via WiFi lokal.</div>
-      </a>
-      <a href="/obs.html" target="_blank" class="menu-card">
-        <div class="mc-ic">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" x2="12" y1="22.08" y2="12"/></svg>
-        </div>
-        <div class="mc-title" data-i18n="card_obs_title">OBS Browser Source</div>
-        <div class="mc-desc" data-i18n="card_obs_desc">Buka URL overlay transparan untuk disalin ke OBS Studio.</div>
-      </a>
+    <!-- Feature Showcase Grid ("Special Tools") -->
+    <div class="section-header-row">
+      <div class="section-title">Studio Tools & Integrations</div>
+      <a href="/customdeck.html" class="section-link">Kelola Semua Media ›</a>
     </div>
 
-    <!-- Supplementary Tools -->
-    <div class="menu-sec-label fu d3" data-i18n="sec_more_tools">Alat Tambahan</div>
-    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:24px;" class="fu d3">
-      <div class="menu-card" onclick="openKDSetup()" style="cursor:pointer;">
-        <div class="mc-ic">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="22" x2="18" y1="12" y2="12"/><line x1="6" x2="2" y1="12" y2="12"/><line x1="12" x2="12" y1="6" y2="2"/><line x1="12" x2="12" y1="22" y2="18"/></svg>
+    <div class="feature-grid">
+      <a href="/customdeck.html" class="feature-card highlight">
+        <div class="fc-icon-wrap">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="m12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.9a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83Z"/><path d="m22 17.65-9.17 4.16a2 2 0 0 1-1.66 0L2 17.65"/><path d="m22 12.65-9.17 4.16a2 2 0 0 1-1.66 0L2 12.65"/></svg>
         </div>
-        <div class="mc-title" data-i18n="card_kd_title">K/D · W/L Counter</div>
-        <div class="mc-desc" data-i18n="card_kd_desc">Pelacak skor Kill, Death, Win, dan Lose saat streaming game.</div>
-      </div>
-      <a href="#" class="menu-card" onclick="openShortcutSetup();return false;">
-        <div class="mc-ic">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 8h.001M10 8h.001M14 8h.001M18 8h.001M6 12h.001M10 12h.001M14 12h.001M18 12h.001M7 16h10"/></svg>
-        </div>
-        <div class="mc-title" data-i18n="card_hotkey_title">Pengaturan Hotkey</div>
-        <div class="mc-desc" data-i18n="card_hotkey_desc">Konfigurasi tombol keyboard cepat untuk memicu meme.</div>
+        <span class="fc-badge">CREATOR STUDIO</span>
+        <div class="fc-title">Custom Deck Studio</div>
+        <div class="fc-desc">Upload meme, atur durasi animasi, audio level, chroma key green screen, dan koordinat layer overlay.</div>
       </a>
-      <a href="#" class="menu-card" onclick="openBestPlugins();return false;">
-        <div class="mc-ic">
-          <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/><circle cx="12" cy="12" r="4"/></svg>
+
+      <a href="/deck.html" class="feature-card">
+        <div class="fc-icon-wrap">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="6" x2="10" y1="12" y2="12"/><line x1="8" x2="8" y1="10" y2="14"/><line x1="15" x2="15.01" y1="13" y2="13"/><line x1="18" x2="18.01" y1="11" y2="11"/><rect width="20" height="12" x="2" y="6" rx="6"/></svg>
         </div>
-        <div class="mc-title" data-i18n="card_plugins_title">Rekomendasi Plugin</div>
-        <div class="mc-desc" data-i18n="card_plugins_desc">Kumpulan plugin esensial untuk meningkatkan kualitas OBS.</div>
+        <span class="fc-badge">LIVE CONTROLLER</span>
+        <div class="fc-title">Deck Soundboard</div>
+        <div class="fc-desc">Pemicu instan untuk live stream: grid soundboard dengan tab kategori, drag-and-drop, dan shortcut hotkeys.</div>
+      </a>
+
+      <div class="feature-card" onclick="openKDSetup()" style="cursor:pointer;">
+        <div class="fc-icon-wrap">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="22" x2="18" y1="12" y2="12"/><line x1="6" x2="2" y1="12" y2="12"/><line x1="12" x2="12" y1="6" y2="2"/><line x1="12" x2="12" y1="22" y2="18"/></svg>
+        </div>
+        <span class="fc-badge">GAME STATS</span>
+        <div class="fc-title">K/D · W/L Tracker</div>
+        <div class="fc-desc">Pelacak skor Kill, Death, Win, dan Lose saat streaming game dengan sinkronisasi teks atomik ke OBS Studio.</div>
+      </div>
+
+      <a href="#" class="feature-card" onclick="openConnect();return false;">
+        <div class="fc-icon-wrap">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="14" height="20" x="5" y="2" rx="2" ry="2"/><path d="M12 18h.01"/></svg>
+        </div>
+        <span class="fc-badge">LAN REMOTE</span>
+        <div class="fc-title">Koneksi Smartphone</div>
+        <div class="fc-desc">Scan QR Code untuk mengubah smartphone / tablet menjadi remote controller nirkabel tanpa instalasi aplikasi.</div>
+      </a>
+
+      <a href="/obs.html" target="_blank" class="feature-card">
+        <div class="fc-icon-wrap">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polygon points="23 7 16 12 23 17 23 7"/><rect width="15" height="14" x="1" y="5" rx="2" ry="2"/></svg>
+        </div>
+        <span class="fc-badge">BROADCAST OVERLAY</span>
+        <div class="fc-title">OBS Browser Source</div>
+        <div class="fc-desc">Buka link browser source transparan dengan akselerasi GPU hardware untuk disematkan pada OBS Studio.</div>
+      </a>
+
+      <a href="#" class="feature-card" onclick="openShortcutSetup();return false;">
+        <div class="fc-icon-wrap">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="M6 8h.001M10 8h.001M14 8h.001M18 8h.001M6 12h.001M10 12h.001M14 12h.001M18 12h.001M7 16h10"/></svg>
+        </div>
+        <span class="fc-badge">QUICK ACCESS</span>
+        <div class="fc-title">Keyboard Hotkeys</div>
+        <div class="fc-desc">Konfigurasi shortcut keyboard cepat untuk memicu meme tanpa alt-tab dari layar game utama.</div>
       </a>
     </div>
 
     <!-- Active Counters List -->
-    <div id="active-counters" style="margin-bottom:10px;display:flex;flex-direction:column;gap:5px;"></div>
+    <div id="active-counters" style="margin-top:-8px;display:flex;flex-direction:column;gap:5px;"></div>
+
+    <!-- Bottom OBS Live Broadcast Station Dock (Dribbble Studio Style) -->
+    <div class="obs-studio-dock">
+      <div>
+        <div class="dock-col-title">OBS Studio Scene Switcher</div>
+        <div class="scene-chips-list" id="dock-scene-list">
+          <button class="scene-chip-btn active" onclick="switchOBSScene('Camera')">📷 Camera</button>
+          <button class="scene-chip-btn" onclick="switchOBSScene('Gameplay')">🎮 Gameplay</button>
+          <button class="scene-chip-btn" onclick="switchOBSScene('BRB')">☕ Be Right Back</button>
+          <button class="scene-chip-btn" onclick="switchOBSScene('Starting')">🎬 Starting Soon</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="dock-col-title">Master Audio Dial</div>
+        <div class="audio-knob-group">
+          <div class="audio-knob-item">
+            <div class="audio-knob-dial">100</div>
+            <div class="audio-knob-text">
+              <div class="audio-knob-title">HD Audio</div>
+              <div class="audio-knob-sub">Desktop Output</div>
+            </div>
+          </div>
+          <div class="audio-knob-item">
+            <div class="audio-knob-dial" style="border-color:var(--gn);">MIC</div>
+            <div class="audio-knob-text">
+              <div class="audio-knob-title">Mic / AUX</div>
+              <div class="audio-knob-sub">Input Active</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;align-items:flex-end;justify-content:center;gap:6px;">
+        <div style="font-size:0.62rem;font-weight:700;color:var(--tx3);letter-spacing:1px;text-transform:uppercase;">STATION STATUS</div>
+        <div style="font-size:1.1rem;font-weight:900;color:var(--ember);font-family:'JetBrains Mono',monospace;" id="dock-telemetry-timer">00:00:00</div>
+        <div style="font-size:0.65rem;color:var(--gn);display:flex;align-items:center;gap:4px;">
+          <span style="width:5px;height:5px;border-radius:50%;background:var(--gn);"></span> OBS WS V5 CONNECTED
+        </div>
+      </div>
+    </div>
 
   </div>
+</div>
 </div>
 </div>
 

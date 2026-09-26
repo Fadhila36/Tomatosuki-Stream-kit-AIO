@@ -214,7 +214,13 @@ const UI_SCRIPT_PATH = fs.existsSync(path.join(APP_PATH, 'loosecast-ui.js'))
 app.get('/loosecast-ui.js', (req, res) => res.sendFile(UI_SCRIPT_PATH));
 app.get('/stream-kit-ui.js', (req, res) => res.redirect(301, '/loosecast-ui.js'));
 app.get('/ksk-ui.js', (req, res) => res.redirect(301, '/loosecast-ui.js'));
+
+// Clean Professional Route Aliases
+app.get('/deck', (req, res) => res.sendFile(path.join(APP_PATH, 'public', 'deck.html')));
+app.get('/studio', (req, res) => res.sendFile(path.join(APP_PATH, 'public', 'customdeck.html')));
 app.get('/customdeck', (req, res) => res.sendFile(path.join(APP_PATH, 'public', 'customdeck.html')));
+app.get('/obs', (req, res) => res.sendFile(path.join(APP_PATH, 'public', 'obs.html')));
+app.get('/controller', (req, res) => res.sendFile(path.join(APP_PATH, 'public', 'deck.html')));
 
 // REST API routes
 
